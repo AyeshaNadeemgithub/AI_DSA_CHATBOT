@@ -3,30 +3,45 @@ project(AI_DSA_CHATBOT)
 
 set(CMAKE_CXX_STANDARD 17)
 
+# =============================================
+# Global include directory (all targets see it)
+# =============================================
 include_directories(${CMAKE_SOURCE_DIR}/include)
 
-# Build DSA source files into a static library so other targets can link to it.
+# =============================================
+# DSA Static Library (core algorithms)
+# =============================================
 file(GLOB_RECURSE DSA_SOURCES "${CMAKE_SOURCE_DIR}/src/dsa/*.cpp")
 add_library(dsa STATIC ${DSA_SOURCES})
 target_include_directories(dsa PUBLIC ${CMAKE_SOURCE_DIR}/include)
 
-# Build the chatbot executable (main entry) and link against the dsa library.
-set(MAIN_SRC "${CMAKE_SOURCE_DIR}/src/main.cpp")
-if(EXISTS ${MAIN_SRC})
-	add_executable(chatbot ${MAIN_SRC})
-	target_link_libraries(chatbot PRIVATE dsa)
+# =============================================
+# Main Chatbot Application
+# =============================================
+if(EXISTS ${CMAKE_SOURCE_DIR}/src/main.cpp)
+    add_executable(chatbot src/main.cpp)
+    target_link_libraries(chatbot PRIVATE dsa)
 endif()
 
-# If there's a workspace-level tests directory (one level up), add each test
-# as an executable that links the dsa library. This allows building tests
-# from within the CMake project directory using the same include root.
-set(WORKSPACE_TESTS_DIR "${CMAKE_SOURCE_DIR}/../tests")
-if(EXISTS ${WORKSPACE_TESTS_DIR})
-	file(GLOB TEST_SOURCES "${WORKSPACE_TESTS_DIR}/*.cpp")
-	foreach(test_src ${TEST_SOURCES})
-		get_filename_component(test_name ${test_src} NAME_WE)
-		add_executable(${test_name} ${test_src})
-		target_include_directories(${test_name} PRIVATE ${CMAKE_SOURCE_DIR}/include)
-		target_link_libraries(${test_name} PRIVATE dsa)
-	endforeach()
-endif()
+# =============================================
+# Automatic Test Discovery
+# =============================================
+# Find all test_*.cpp files in tests/ and create executables
+file(GLOB TEST_SOURCES "${CMAKE_SOURCE_DIR}/tests/test_*.cpp")
+
+foreach(test_src ${TEST_SOURCES})
+    get_filename_component(test_name ${test_src} NAME_WE)  # e.g., "test_bst" from "test_bst.cpp"
+    add_executable(${test_name} ${test_src})
+    target_include_directories(${test_name} PRIVATE ${CMAKE_SOURCE_DIR}/include)
+    target_link_libraries(${test_name} PRIVATE dsa)
+endforeach()
+
+# =============================================
+# Enable Testing (optional, for ctest)
+# =============================================
+enable_testing()
+foreach(test_src ${TEST_SOURCES})
+    get_filename_component(test_name ${test_src} NAME_WE)
+    add_test(NAME ${test_name} COMMAND ${test_name})
+endforeach()
+

@@ -1,0 +1,1 @@
+/usr/bin/c++ -Wl,-search_paths_first -Wl,-headerpad_max_install_names CMakeFiles/test_LinkedList.dir/tests/test_LinkedList.cpp.o -o test_LinkedList  libdsa.a

@@ -1,0 +1,1 @@
+/usr/bin/c++ -Wl,-search_paths_first -Wl,-headerpad_max_install_names CMakeFiles/test_searching.dir/tests/test_searching.cpp.o -o test_searching  libdsa.a

@@ -1,0 +1,2 @@
+/usr/bin/ar qc libdsa.a CMakeFiles/dsa.dir/src/dsa/Heap.cpp.o CMakeFiles/dsa.dir/src/dsa/KMP.cpp.o CMakeFiles/dsa.dir/src/dsa/LinkedList.cpp.o CMakeFiles/dsa.dir/src/dsa/Queue.cpp.o CMakeFiles/dsa.dir/src/dsa/RabinKarp.cpp.o CMakeFiles/dsa.dir/src/dsa/Searching.cpp.o CMakeFiles/dsa.dir/src/dsa/Sorting.cpp.o CMakeFiles/dsa.dir/src/dsa/Stack.cpp.o CMakeFiles/dsa.dir/src/dsa/Trie.cpp.o
+/usr/bin/ranlib libdsa.a

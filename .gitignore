@@ -1,22 +1,35 @@
-# Ignore compiled files
+
+# Your existing entries
 *.o
 *.obj
 *.exe
 *.out
 
-# Ignore temporary files
 *.log
 *.tmp
 
-# Ignore OS files
 .DS_Store
 Thumbs.db
 
-# Ignore API keys and chat history
 config.h
 chat_history.txt
 
-# Ignore Qt/GUI generated files (if any)
 *.moc
 *.qrc
 *.ui.*
+
+
+# === Additional needed entries ===
+
+# Ignore generated build directories
+build/
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+
+# VSCode
+.vscode/
+
+# Ignore dependency or object detail files
+*.o.d
